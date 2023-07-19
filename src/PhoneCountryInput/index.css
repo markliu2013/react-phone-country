@@ -1,0 +1,39 @@
+html {
+    font-size: 62.5%;
+}
+body {
+    background: rgba(0, 0, 0, 0.85);
+    font-family: NeverMind, Barlow, system-ui, -apple-system, 'PingFang SC', BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', 'Microsoft YaHei', '微软雅黑', '黑体', 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', Arial, sans-serif;
+    font-size: 1.4rem;
+}
+input {
+    all: unset;
+    color: #fff;
+}
+input::placeholder {
+    color: rgba(255, 255, 255, 0.1);
+}
+.phone-country-form-control {
+    display: flex;
+    align-items: center;
+}
+.phone-country-form-control label {
+    font-size: 1.4rem;
+    color: #fff;
+}
+.phone-country-required-asterisk {
+    color: #f00;
+}
+.phone-country-form-control-input {
+    display: flex;
+    align-items: stretch;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 450px;
+}
+.phone-country-form-control-input .phone-country-form-number-input {
+    padding-left: 10px;
+    color: #fff;
+}
