@@ -1,7 +1,8 @@
+import React from "react";
 import PhoneCountrySelect from "./PhoneCountrySelect";
 import './index.css'
 
-const PhoneCountryInput = () => {
+const PhoneCountryInput: React.FC = () => {
 
     return (
         <div className="phone-country-form-control">

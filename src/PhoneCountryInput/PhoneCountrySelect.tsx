@@ -1,19 +1,20 @@
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import phoneCountryCode from './phone_country_code.json'
 import './PhoneCountrySelect.css'
+import {Country} from "./types";
 
-const PhoneCountrySelect = () => {
+const PhoneCountrySelect: React.FC = () => {
 
-    const [isOpen, setIsOpen] = useState(false)
-    const [countryList, setCountryList] = useState([])
-    const [countrySelected, setCountrySelected] = useState([])
-    const countrySelectedRef = useRef(null)
-    const countryDropdownRef = useRef(null)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [countryList, setCountryList] = useState<Country[]>([])
+    const [countrySelected, setCountrySelected] = useState<Country>()
+    const countrySelectedRef = useRef<HTMLDivElement>(null)
+    const countryDropdownRef = useRef<HTMLDivElement>(null)
 
+    // init countryList base on phoneCountryCode json.
     useEffect(() => {
-        // init countryList base on phoneCountryCode json.
-        const tempCountryList = [];
-        phoneCountryCode.forEach((country) => {
+        const tempCountryList: Country[] = [];
+        phoneCountryCode.forEach(country => {
             tempCountryList.push({
                 countryCode: country['country_code'],
                 code: `+${country['phone_code']}`,
@@ -25,17 +26,20 @@ const PhoneCountrySelect = () => {
         setCountrySelected(tempCountryList[0])
     }, [])
 
-    function itemClickHandler(item) {
+    // select country
+    function itemClickHandler(item: Country) {
         setCountrySelected(item)
         setIsOpen(false)
     }
 
     useEffect(() => {
-        function documentClickHandler(event) {
-            if (countryDropdownRef.current && countryDropdownRef.current.contains(event.target)) {
+        // toggle dropdown
+        function documentClickHandler(event: Event) {
+            const target = event.target as HTMLInputElement;
+            if (countryDropdownRef.current && countryDropdownRef.current.contains(target)) {
                 return false;
             }
-            if (countrySelectedRef.current && countrySelectedRef.current.contains(event.target)) {
+            if (countrySelectedRef.current && countrySelectedRef.current.contains(target)) {
                 setIsOpen(true)
             } else {
                 setIsOpen(false)
@@ -48,10 +52,12 @@ const PhoneCountrySelect = () => {
     }, [])
 
     // search by code or name
-    const [searchText, setSearchText] = useState('')
+    const [searchText, setSearchText] = useState<string>('')
     useEffect(() => {
+        if (countryList.length < 1) return; // search should run after countryList data loaded
+        let newCountryList: Country[];
         if (searchText && searchText.length > 0) {
-            const newCountryList = countryList.map(country => {
+            newCountryList = countryList.map(country => {
                 if (country.name.toLowerCase().includes(searchText.toLowerCase()) || country.code.toString().includes(searchText)) {
                     country.visible = true
                 } else {
@@ -59,19 +65,25 @@ const PhoneCountrySelect = () => {
                 }
                 return country;
             })
-            setCountryList(newCountryList)
+        } else {
+            newCountryList = countryList.map(country => {
+                country.visible = true;
+                return country;
+            })
         }
+        setCountryList(newCountryList)
     }, [searchText])
 
     // flag icon lazy load
-    const [flagLoaded, setFlagLoaded] = useState(false)
+    const [flagLoaded, setFlagLoaded] = useState<boolean>(false)
     function flagLazyLoad() {
+        // should run only once.
         if (flagLoaded) return;
-        const callback = entries => {
+        const callback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    const image = entry.target.querySelector('.phone-country-select-list-flag')
-                    const data_src = image.getAttribute('data-src')
+                    const image = entry.target.querySelector('.phone-country-select-list-flag') as HTMLElement
+                    const data_src = image.getAttribute('data-src') as string
                     image.setAttribute('src', data_src)
                     observer.unobserve(entry.target)
                 }
@@ -107,8 +119,8 @@ const PhoneCountrySelect = () => {
             </div>
             <div className={"phone-country-select-dropdown " + (isOpen ? 'open' : 'closed')} ref={countryDropdownRef}>
                 <div className="phone-country-select-search">
-                    <input type="text" placeholder="Search by Name or Code" onChange={e => setSearchText(e.target.value)} />
-                    <img src="/clear.svg" />
+                    <input type="text" placeholder="Search by Name or Code" value={searchText} onChange={e => setSearchText(e.target.value)} />
+                    <img src="/clear.svg" onClick={() => setSearchText('')} />
                 </div>
                 <ul>
                     {
