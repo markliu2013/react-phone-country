@@ -1,10 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import PhoneCountryInput from './PhoneCountryInput'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import PhoneCountryInput from './PhoneCountryInput';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <PhoneCountryInput />
   </React.StrictMode>,
-)
+);

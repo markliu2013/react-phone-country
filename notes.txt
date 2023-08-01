@@ -1,0 +1,13 @@
+vue3企业级项目骨架搭建，涉及vite、eslint、prettierrc、husky、commitlint、lint-staged、stylelint
+https://www.bilibili.com/video/BV1BV4y1N7pd/
+
+eslint: ESLint的核心库
+prettier: prettier格式化代码的核心库
+eslint-config-prettier		eslint结合prettier的格式化
+eslint-plugin-import		项目里面支持eslint
+eslint-plugin-prettier		将prettier结合进去eslint的插件
+eslint-config-airbnb-base	airbnb的代码规范（依赖plugin-import）
+
+@typescript-eslint/parser				eslint解析器，解析typescript，检查规范typescript代码
+@typescript-eslint/eslint-plugin		eslint插件，包含了各类定义好的检测typescript代码的规范
+eslint-import-resolver-alias			让我们可以用import的时候使用@别名
