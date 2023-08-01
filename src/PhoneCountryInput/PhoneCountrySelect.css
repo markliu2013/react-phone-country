@@ -19,8 +19,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.phone-country-select-selected-code {
-}
 .phone-country-select-dropdown {
   position: absolute;
   top: 100%;
