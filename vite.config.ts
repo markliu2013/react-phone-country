@@ -8,14 +8,11 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5199,
   },
-
   build: {
     rollupOptions: {
       output: {
-
         /**
-         * 2.以函数的形式使用
-         * 将第三方包全部打包在一个chunk中，名称叫 vendor
+         * https://juejin.cn/post/7135671174893142030
          */
         manualChunks(id, { getModuleInfo, getModuleIds }) {
           if (id.includes('svg')) {

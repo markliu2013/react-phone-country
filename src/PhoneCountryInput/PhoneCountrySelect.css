@@ -79,6 +79,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 .phone-country-select-list-flag {
+  display: flex;
   width: 30px;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FlagSvg from "./FlagSvg";
+import FlagSvg from './FlagSvg';
 import phoneCountryCode from './phone_country_code.json';
 import './PhoneCountrySelect.css';
 import { Country } from './types';
@@ -82,7 +82,7 @@ const PhoneCountrySelect: React.FC = () => {
       <div className='phone-country-select-selected' ref={countrySelectedRef}>
         {countrySelected && countrySelected.countryCode && (
           <>
-            <img src={`/flags/${countrySelected.countryCode}.svg`} />
+            <FlagSvg code={countrySelected.countryCode} />
             <span className='phone-country-select-selected-name'>{countrySelected.name}</span>
             <span className='phone-country-select-selected-code'>{countrySelected.code}</span>
           </>
