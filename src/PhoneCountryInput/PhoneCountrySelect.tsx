@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import FlagSvg from './FlagSvg';
 import phoneCountryCode from './phone_country_code.json';
 import './PhoneCountrySelect.css';
 import { Country } from './types';
@@ -76,45 +77,12 @@ const PhoneCountrySelect: React.FC = () => {
     setCountryList(newCountryList);
   }, [searchText]);
 
-  // flag icon lazy load
-  const [flagLoaded, setFlagLoaded] = useState<boolean>(false);
-  function flagLazyLoad() {
-    // should run only once.
-    if (flagLoaded) return;
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const image = entry.target.querySelector(
-            '.phone-country-select-list-flag',
-          ) as HTMLElement;
-          const data_src = image.getAttribute('data-src') as string;
-          image.setAttribute('src', data_src);
-          observer.unobserve(entry.target);
-        }
-      });
-    };
-    const observer = new IntersectionObserver(callback, {
-      root: document.querySelector('.phone-country-select-dropdown ul'),
-    });
-    const images = document.querySelectorAll('.phone-country-select-dropdown ul li');
-    images.forEach((image) => {
-      observer.observe(image);
-    });
-    setFlagLoaded(true);
-  }
-
-  useEffect(() => {
-    if (isOpen) {
-      flagLazyLoad();
-    }
-  }, [isOpen]);
-
   return (
     <div className='phone-country-select-container'>
       <div className='phone-country-select-selected' ref={countrySelectedRef}>
         {countrySelected && countrySelected.countryCode && (
           <>
-            <img src={`/flags/${countrySelected.countryCode}.svg`} />
+            <FlagSvg code={countrySelected.countryCode} />
             <span className='phone-country-select-selected-name'>{countrySelected.name}</span>
             <span className='phone-country-select-selected-code'>{countrySelected.code}</span>
           </>
@@ -140,10 +108,7 @@ const PhoneCountrySelect: React.FC = () => {
               onClick={() => itemClickHandler(item)}
               className={item.visible ? 'show' : 'hide'}
             >
-              <img
-                className='phone-country-select-list-flag'
-                data-src={`/flags/${item.countryCode}.svg`}
-              />
+              <FlagSvg code={item.countryCode} />
               <span className='phone-country-select-list-name'>{item.name}</span>
               <span className='phone-country-select-list-code'>{item.code}</span>
             </li>

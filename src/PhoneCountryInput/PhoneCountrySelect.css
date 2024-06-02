@@ -19,8 +19,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.phone-country-select-selected-code {
-}
 .phone-country-select-dropdown {
   position: absolute;
   top: 100%;
@@ -81,6 +79,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 .phone-country-select-list-flag {
+  display: flex;
   width: 30px;
 }
 
